@@ -1,0 +1,9 @@
+# Arquivo de inventorio contendo as máquinas gerenciadas pelo ansible
+
+# O nome do grupo será "cloud"
+cloud:
+  hosts:
+    # O grupo cloud conterá a máquina "compute01"
+    compute01:
+        ansible_host: XXXXX  # Substitua com o  IP Publico ou DNS da máquina remota
+        ansible_user: ubuntu
