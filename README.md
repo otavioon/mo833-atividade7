@@ -6,7 +6,7 @@ O objetivo desta atividade é aprender a implantar uma aplicação e gerenciá-l
 
 ## Descrição
 
-Inicialmente, você deve ler o capítulo de livro intitulado "Deploying and Configuring Infrastructure". 
+Inicialmente, você deve ler o capítulo de livro intitulado "*Deploying and Configuring Infrastructure*". 
 
 Nesta atividade, você deve desenvolver um *playbook* Ansible que faça a implantação e execução da [DCGAN](https://github.com/otavioon/Distributed-DCGAN.git) em uma máquina virtual da nuvem computacional. 
 Em suma, o *playbook* Ansible desenvolvido deverá realizar as seguintes operações:
@@ -24,42 +24,42 @@ Utilizaremos o termo "máquina local" para designar a máquina que será utiliza
 
 ### Requisitos
 
-Para execução da atividade, você precisará de:
+Para execução da atividade, você precisará:
 1. Instanciar máquina virtual na AWS utilizando o AWS *Web Console*, semelhantemente a atividade anterior;
-2. Seu identificador da chave de acesso e identificador da shave de acesso secreta (`Access Key ID` e `Secret access key`, respectivamente). Estes foram enviados por e-mail;
-3. Um par de chaves (publica e privada) registrados na AWS, bem quanto o nome deste par de chaves registrado (`KEYPAIR_NAME`). Este par de chaves é o mesmo utilizado para acessar uma máquina virtual por SSH.;
-4. A aplicação Docker instalada na máquina local para execução do Ansible.
+2. Possuir seu identificador da chave de acesso e identificador da shave de acesso secreta (`Access Key ID` e `Secret access key`, respectivamente) consigo. Estes foram enviados por e-mail;
+3. Possuir um par de chaves (publica e privada) registrados na AWS, bem como o nome deste par de chaves (`KEYPAIR_NAME`). Este par de chaves é o mesmo utilizado para acessar uma máquina virtual por SSH.;
+4. Possuir a aplicação Docker instalada na máquina local para execução do Ansible.
 
 A máquina virtual na AWS (item 1) deve ser instanciada através do *AWS Web Console* com a seguinte configuração:
 
 ```
 Tipo de instancia: t2.medium
-Keypair: O KEYPAIR_NAME indicado no item 3
-Volume: EBS, de 16 Gb, montado em /dev/sda1
+Keypair: O KEYPAIR_NAME seu, mesmo do item 3
+Volume: EBS de 16 Gb, montado em /dev/sda1
 Imagem: Ubuntu 20.04 Server, com AMI-ID: ami-0c4f7023847b90238
 ```
 
-Uma vez instanciada, IP público (`public_ip_address`) ou DNS da máquina virtual, deve ser anotado. Este pode ser encontrado na descrição da máquina virtual, no AWS  *Web Console*, no campo `Auto-assigned IP address` ou `Public IPv4 DNS`.
+Uma vez instanciada, IP público (`public_ip_address`) ou DNS da máquina virtual, deve ser anotado. Este pode ser encontrado na descrição da máquina virtual, no AWS *Web Console*, no campo `Auto-assigned IP address` ou `Public IPv4 DNS`. Note que este IP/DNS pode mudar caso a máquina virtual seja suspensa. 
 
 ### Infraestrutura para Execução do *Playbook*
 
 O presente repositório deve ser clonado e executado apenas na máquina local. 
 Este conta com os seguintes arquivos para execução do seu *playbook* Ansible:
 
-- ``build_docker.sh``: *Script* para gerar a imagem Docker, contendo Ansible e boto (cliente da AWS), na máquina local. A imagem gerada é chamada `mo833-ansible`. Este arquivo não deve ser alterado;
+- ``build_docker.sh``: *Script* para gerar a imagem Docker, que contém Ansible e boto (cliente da AWS). A imagem gerada é chamada `mo833-ansible`. Este arquivo não deve ser alterado;
 - ``configure.yaml``: *Playbook* Ansible que deve ser preenchido com *tasks* necessárias para completar a atividade;
 - ``Dockerfile``: Arquivo de descrição da imagem Docker, utilizado pelo script `build_docker.sh`. Este arquivo não deve ser alterado;
-- ``inventory.yaml``: Arquivo de inventorio contendo a máquina remota que será gerenciada pelo Ansible;
-- ``run_configure.sh``: *Script* para executar seu playbook. Este arquivo não deve ser alterado;
+- ``inventory.yaml``: Arquivo de inventorio contendo o endereço da máquina remota que será gerenciada pelo Ansible;
+- ``run_configure.sh``: *Script* para executar seu *playbook*. Este arquivo não deve ser alterado;
 - ``vars.sh``: *Script* conténdo váriaveis globais de ambiente utilizadas para diversas finalidades. Nota: as alterações neste *script* **NÃO** devem ser submetidas ao git.
 
 Primeiramente, para preparação do ambiente, os seguintes passos devem ser realizados:
 
-1. Instale o docker na máquina local e gere a imagem Docker executando o *script* `build_docker.sh`. Este passo pode ser realizado apenas uma vez.
+1. Instale o Docker na máquina local e gere a imagem Docker executando o *script* `build_docker.sh`. Este passo pode ser realizado apenas uma vez.
 
-2. Altere o arquivo `inventory.yaml` e, no campo indicado (`ansible_host`), substitua o marcador de exemplo (`XXXXX`) pelo IP público (`public_ip_address`) ou DNS da máquina remota, recém anotado. Note que, caso a máquina desligue, este IP pode ser alterado e deve ser modificado. Além disso, substitua apenas os campos indicados.
+2. Altere o arquivo `inventory.yaml` e, no campo indicado (`ansible_host`), substitua o marcador de exemplo (`XXXXX`) pelo IP público (`public_ip_address`) ou DNS da máquina remota, recém anotado. Nota: substitua apenas os campos indicados.
 
-3. Substitua os valores dos campos indicados no arquivo `vars.sh` com seus devidos valores. Os campos a serem substituidos são: `AWS_ACCESS_KEY_ID`, com seu respectivo *Access key ID*, enviado a si por e-mail; `AWS_SECRET_ACCESS_KEY`, com seu respectivo *Secret access key*, enviado a si por e-mail e; `KEYPAIR_NAME`, com o nome do par de chaves, registrado na AWS. Além disso, substitua apenas os campos indicados.
+3. Substitua os valores dos campos indicados no arquivo `vars.sh` com seus devidos valores. Os campos a serem substituidos são: `AWS_ACCESS_KEY_ID`, com seu respectivo *Access key ID*, enviado a si por e-mail; `AWS_SECRET_ACCESS_KEY`, com seu respectivo *Secret access key*, enviado a si por e-mail e; `KEYPAIR_NAME`, com o nome do par de chaves, registrado na AWS. Nota: substitua apenas os campos indicados.
 
 4. Copie sua chave privada, utilizada para acessar as máquinas da AWS, para este diretório e renomei-a para `key.pem`.
 
@@ -73,11 +73,15 @@ Para esta atividade, você deve alterar o arquivo `configure.yaml` e, no local i
 1. Instalar as aplicações necessárias para execução da [DCGAN](https://github.com/otavioon/Distributed-DCGAN.git), como os pacotes `docker.io` e `python3-docker`;
 2. Clonar o repositório da [DCGAN](https://github.com/otavioon/Distributed-DCGAN.git);
 3. Criar a imagem Docker da DCGAN (`dist_dcgan`), conforme o manual de uso da mesma (`docker build`);
-4. Executar a DCGAN por 1 época, utilizando os dados de teste do MNIST, e salvando a saída (padrão) emitida pela aplicação em um arquivo de saída ``output.txt``. A linha de comando utilizada para execução da aplicação e redirecionamento da saída para o arquivo `output.txt` é mostrada a seguir (pode ser alterada caso deseje):
+4. Executar a DCGAN por 1 época, utilizando os dados de teste do MNIST, e salvando a saída (padrão) emitida pela aplicação em um arquivo de saída ``output.txt``. A linha de comando utilizada para execução da aplicação e para realizar o redirecionamento da saída para o arquivo `output.txt` é mostrada a seguir (pode ser alterada caso deseje):
 ```
 docker run --rm -e HOMEDIR=$(pwd) -w $(pwd) -v=$(pwd):$(pwd) dist_dcgan:latest python -m torch.distributed.launch dist_dcgan.py --dataset mnist --dataroot data --download --image_size 64 --batch_size 128 --out_folder output --test_data --num_epochs 1 --max_workers 1 >> output.tx
 ```
 4. Copiar o arquivo de saída produzido na máquina remota (`output.txt`) para a máquina local, dentro de um direrório chamado `resultados` (podem haver mais subdiretórios dentro deste, caso deseje).
+
+Uma vez confeccionado o arquivo `configure.yaml`, o *script* `run_configure.sh` deve ser executado para realizar os testes.
+
+Ao finalizar os testes e submissão, você deve terminar a máquina virtual que foi instânciada.
 
 ## Entrega e Avaliação
 
@@ -91,19 +95,23 @@ git push
 As alterações no repositório devem ser realizadas até o dia 24/05/2021 às 13h59min, horário de Brasilia.
 
 ## Dicas e Observações
-- **NÃO** submeta nenhum arquivo adicional.
+- **NÃO** submeta nenhum arquivo adicional, apenas o arquivo `configure.yaml`.
 
 - Altere apenas os campos indicados nos arquivos, uma vez que a avaliação será realizada re-executando os passos descritos nas seções anteriores, entretanto, com o seu arquvo `configure.yaml`. Além disso, é essencial que seus arquivos não dependa de nenhum outro arquivo externo.
 
+- Todas as *tasks* devem ser nomeadas.
+
+- As máquinas virtuais da sua conta na AWS são suspensas todos os dias, a meia-noite. Você pode reativá-las normalmente, através do AWS *Web Console*. Note que o IP/DNS pode mudar, o que exige a atualização das informações no arquivo de inventório.
+
 - Você pode ir montando e executando seu *playbook* aos poucos e testar, sempre que possível.
 
-- Não esqueça de testar antes de submeter!
+- Não esqueça de testar antes de submeter, executando o *script* `run_configure.sh`!
 
 - Você pode, paralelamente, efetuar *login* na máquina remota para observar os efeitos realizados pelas *tasks* executadas.
 
 - Você pode utilizar qualquer módulo embutido na instalação do Ansible, mas não deve instalar nenhum módulo adicional.
 
-- Algun modulos do Ansible úteis para esta atividade podem ser: 
+- Alguns modulos do Ansible úteis para esta atividade podem ser: 
     - [Módulo `apt`](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/apt_module.html) para instalação e atualização de pacotes.
     - [Módulo `git`](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/git_module.html) para utilizar git.
     - [Módulo `docker_image`](https://docs.ansible.com/ansible/latest/collections/community/docker/docker_image_module.html) para construção de imagens Docker.
@@ -114,4 +122,4 @@ As alterações no repositório devem ser realizadas até o dia 24/05/2021 às 1
 
 - A chave `bacome` com valor `True` (*e.g.* `become: true`) pode ser adicionada a uma *task* (ou *play*) para que esta seja executada como super usuário (*e.g.* *root*). Isto é util para *tasks* que necessitam de permissões elevadas (como instalação de pacotes, por exemplo).
 
-- Para longas tarefas (execução da aplicação e construção da imagem Docker), o Ansible fornece as chaves [`pool`](https://docs.ansible.com/ansible/latest/user_guide/playbooks_async.html#asynchronous-playbook-tasks) e [`async`](https://docs.ansible.com/ansible/latest/user_guide/playbooks_async.html#asynchronous-playbook-tasks) para evitar desconexões SSH ao executar as tarefas. Valores como `pool: 30` e `async: 600` podem ser razoáveis para estas tarefas, caso necessite.
+- Para longas tarefas (execução da aplicação ou construção da imagem Docker, por exemplo), o Ansible fornece as chaves [`pool`](https://docs.ansible.com/ansible/latest/user_guide/playbooks_async.html#asynchronous-playbook-tasks) e [`async`](https://docs.ansible.com/ansible/latest/user_guide/playbooks_async.html#asynchronous-playbook-tasks) para evitar desconexões SSH ao executar as tarefas. Valores como `pool: 30` e `async: 600` podem ser razoáveis para as tarefas de execução daaplicação e criação da imagem Docker, caso necessite.
