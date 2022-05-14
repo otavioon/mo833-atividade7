@@ -75,7 +75,7 @@ Para esta atividade, você deve alterar o arquivo `configure.yaml` e, no local i
 3. Criar a imagem Docker da DCGAN (`dist_dcgan`), conforme o manual de uso da mesma (`docker build`);
 4. Executar a DCGAN por 1 época, utilizando os dados de teste do MNIST, e salvando a saída (padrão) emitida pela aplicação em um arquivo de saída ``output.txt``. A linha de comando utilizada para execução da aplicação e para realizar o redirecionamento da saída para o arquivo `output.txt` é mostrada a seguir (pode ser alterada caso deseje):
 ```
-docker run --rm -e HOMEDIR=$(pwd) -w $(pwd) -v=$(pwd):$(pwd) dist_dcgan:latest python -m torch.distributed.launch dist_dcgan.py --dataset mnist --dataroot data --download --image_size 64 --batch_size 128 --out_folder output --test_data --num_epochs 1 --max_workers 1 >> output.tx
+docker run --rm -e HOMEDIR=$(pwd) -w $(pwd) -v=$(pwd):$(pwd) dist_dcgan:latest python -m torch.distributed.launch dist_dcgan.py --dataset mnist --dataroot data --download --image_size 64 --batch_size 128 --out_folder output --test_data --num_epochs 1 --max_workers 1 >> output.txt
 ```
 4. Copiar o arquivo de saída produzido na máquina remota (`output.txt`) para a máquina local, dentro de um direrório chamado `resultados` (podem haver mais subdiretórios dentro deste, caso deseje).
 
